@@ -5,18 +5,18 @@ import os.path
 import subprocess
 
 ### ARGPARSE ###################################################################
-parser = argparse.ArgumentParser(description='Save and restore your Flatpak packages!', prog='FlatpakSync')
+parser = argparse.ArgumentParser(description='Save and restore your Flatpak apps!', prog='FlatpakSync')
 
 parser.add_argument('--version', action='version', version='%(prog)s v1.0')
 parser.add_argument('-b', '--backup',
     action='store_true',
-    help='Create backup.')
+    help='Create a list of all installed Flatpak apps.')
 parser.add_argument('-i', '--install',
     action='store_true',
-    help='Install all Flatpak.')
+    help='Install all Flatpak apps listed in a file.')
 parser.add_argument('-f', '--file',
     default="FlatpakSync__installed_apps.txt",
-    help='')
+    help='Specify the filename where the Flatpak apps list is stored.')
 
 args = parser.parse_args()
 # end - argparse
