@@ -1,6 +1,7 @@
 # FlatpakSync
 
-Automatically create a list of all installed Flatpak apps and easily install all of them with just one script execution!
+Easily save and restore all installed Flatpak packages with just one script
+execution!
 
 ## Usage
 
