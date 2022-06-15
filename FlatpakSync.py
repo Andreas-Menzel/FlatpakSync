@@ -1,5 +1,17 @@
 #!/usr/bin/env python3
 
+#-------------------------------------------------------------------------------
+# FlatpakSync
+#
+# Easily save and restore all installed Flatpak packages.
+#
+# https://github.com/Andreas-Menzel/FlatpakSync
+#-------------------------------------------------------------------------------
+# @author: Andreas Menzel
+# @license: MIT License
+# @copyright: Copyright (c) 2021 Andreas Menzel
+#-------------------------------------------------------------------------------
+
 import argparse
 import os.path
 from signal import signal, SIGINT
@@ -23,6 +35,11 @@ args = parser.parse_args()
 # end - argparse
 
 
+# get_installed_apps
+#
+# Reads the list of installed packages from a file and returns it.
+#
+# @return   [string]    The list of installed packages listed in the file.
 def get_installed_apps():
     if not os.path.isfile(args.file):
         print('File', '"' + args.file + '"', 'does not exist.')
@@ -41,19 +58,40 @@ def get_installed_apps():
     return apps
 
 
+# create_backup
+#
+# Get the installed packages and save them in a file.
+#
+# @return   None
 def create_backup():
     with open(args.file, 'w') as file:
         subprocess.run(["flatpak", "list", "--columns=origin,application,arch,branch"], stdout=file, text=True).stdout
 
 
+# install
+#
+# Install a given list of packages.
+#
+# @param    [string]    apps    List of apps to install.
+#
+# @return   None
 def install(apps):
     for app in apps:
         subprocess.run(["flatpak", "install", "--noninteractive", "-y", app[0], app[1] + "/" + app[2] + "/" + app[3]])
 
 
+# end
+#
+# Ends the script.
+#
+# @param    int         sig     Signal.
+# @param    FrameType   frame   Frame.
+#
+# @return   None
 def end(sig, frame):
     print("Goodbye!")
     exit(0)
+
 
 if __name__ == '__main__':
     signal(SIGINT, end)
